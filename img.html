@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="initImg()">
+    <img src="https://www.bing.com/th?id=OHR.NarniaForest_ZH-CN8466850438_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=HpEdgeAn" alt="" 
+    style='width: 300px;height: 300px;'>
+    <canvas id='canvas' width='500' height='500'  style='border: 1px solid red;'></canvas>
+    <script>
+        function initImg() {
+            const canvas = document.querySelector("#canvas");
+            const ctx = canvas.getContext('2d');
+
+            let img = new Image();
+            img.crossOrigin = 'anonymous'
+            img.src = `https://www.bing.com/th?id=OHR.NarniaForest_ZH-CN8466850438_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=HpEdgeAn`
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, 500, 500);
+                const imgData = ctx.getImageData(0, 0, 500, 500)
+                console.log('imgData', imgData)
+            }
+
+                 
+
+            
+
+            
+
+           
+
+            // function getPixel(imgData, index) {
+            //     var i = index*4, d = imgData.data;
+            //     return [d[i],d[i+1],d[i+2],d[i+3]] // Returns array [R,G,B,A]
+            // }
+          
+        }
+        
+
+    </script>
+</body>
+</html>

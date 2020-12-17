@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body onload='init()'>
+    <canvas id='canvas'  width='1000' height='1000'/>
+    <canvas id='canvasPix'  width='100' height='100'/>
+    <script>
+        // function init() {
+        //     const ctx = document.querySelector('#canvas').getContext('2d');
+        //     ctx.fillRect(0, 0, 150, 150);
+        //     ctx.save()
+
+        //     ctx.fillStyle='#09F';
+        //     ctx.fillRect(15, 15, 120, 120);
+        //     ctx.save();
+        //     ctx.fillStyle = '#FFF'
+        //     ctx.globalAlpha = 0.5;
+        //     ctx.fillRect(30, 30, 90, 90);
+        //     ctx.restore();
+        //     ctx.fillRect(45, 45, 60, 60);
+        //     ctx.restore();
+        //     ctx.fillRect(60, 60, 30, 30);
+        // }
+
+        // function init() {
+        //     const canvas = document.querySelector('#canvas');
+        //     canvas.width = document.documentElement.clientWidth;
+        //     canvas.height = document.documentElement.clientHeight;
+        //     const ctx = canvas.getContext('2d');
+
+        //     for (let i = 0; i < 200; i++) {
+        //         for (let j = 0; j < 200; j++) {
+        //             ctx.save();
+        //             ctx.fillStyle = `rgb(${Math.random()*250},${Math.random()*250}, ${Math.random()*0}`;
+        //             ctx.translate(5+j*10, 5+i*10);
+        //             ctx.fillRect(0, 0, 8, 8);
+        //             ctx.restore();
+        //         }
+        //     }
+        // }
+
+        function init() {
+            const canvas = document.querySelector("#canvas");
+            const ctx = canvas.getContext('2d');
+
+            let img = new Image();
+            img.crossOrigin = 'anonymous'
+            img.src = `https://www.bing.com/th?id=OHR.NarniaForest_ZH-CN8466850438_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=HpEdgeAn`
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, 500, 500);
+                const imgData = ctx.getImageData(0, 0, 500, 500);
+                console.log('imgData', imgData.data)
+
+                const pixArr = [];
+                const imgDataArr = imgData.data;
+                let j = 0;
+                for (let i = 0; i < imgDataArr.length; i += 4) {
+                    if (i % 2000 == 0) {
+                        j+=1;
+                    }
+                    console.log('j', j, i)
+                    ctx.save();
+                    ctx.fillStyle = `rgba(${imgDataArr[i]},${imgDataArr[i+1]}, ${imgDataArr[i+2]}, ${imgDataArr[i+3]}`;
+                    ctx.translate(5+(i/4)*10, 5+j*10);
+                    ctx.fillRect(0, 0, 8, 8);
+                    ctx.restore();
+                // pixArr.push(imgDataArr[i], imgDataArr[i+1], imgDataArr[i+2], imgDataArr[i+3])
+                }
+
+               // imgPix(imgData.data)
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>
