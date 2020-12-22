@@ -64,18 +64,25 @@
                 const pixArr = [];
                 const imgDataArr = imgData.data;
                 let j = 0;
-                for (let i = 0; i < imgDataArr.length; i += 4) {
+                const startTime = new Date().getTime()
+                console.log('startTime', startTime)
+                let index = 0;
+                const _length = imgDataArr.length;
+                console.log('_length', _length)
+                for (let i = 0; i < _length; i += 4) {
                     if (i % 2000 == 0) {
                         j+=1;
+                        index = 0;
                     }
-                    console.log('j', j, i)
                     ctx.save();
                     ctx.fillStyle = `rgba(${imgDataArr[i]},${imgDataArr[i+1]}, ${imgDataArr[i+2]}, ${imgDataArr[i+3]}`;
-                    ctx.translate(5+(i/4)*10, 5+j*10);
-                    ctx.fillRect(0, 0, 8, 8);
+                    ctx.translate(5+(index/4)*10, 5+j*10);
+                    ctx.fillRect(0, 0, 5, 5);
                     ctx.restore();
-                // pixArr.push(imgDataArr[i], imgDataArr[i+1], imgDataArr[i+2], imgDataArr[i+3])
+                    index += 1;
                 }
+                const endTime = new Date().getTime() - startTime;
+                console.log(endTime/1000 + 's')
 
                // imgPix(imgData.data)
             }
