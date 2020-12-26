@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id='canvas'></canvas>
+    <div id='hovered-color' style='width: 500px;height: 300px;'></div>
+    <div id='selected-color' style='width: 500px;height: 300px;'></div>
+    <script>
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src='./img.jpg';
+        var ctx = document.querySelector('canvas').getContext('2d');
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+            img.style.display = 'none';
+        }
+
+        var hoveredColor = document.getElementById('hovered-color');
+        var selectedColor = document.getElementById('selected-color');
+
+        function pick(event, destination) {
+            console.log(event)
+            var x = event.layerX;
+            var y = event.layerY;
+            var pixel = ctx.getImageData(x, y, 1, 1);
+            var data = pixel.data;
+                const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+                destination.style.background = rgba;
+                destination.textContent = rgba;
+                return rgba;
+        }
+
+        canvas.addEventListener('mousemove', function(event) {
+            pick(event, hoveredColor);
+        });
+        canvas.addEventListener('click', function(event) {
+            pick(event, selectedColor);
+        });
+    </script>
+</body>
+</html>
